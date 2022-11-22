@@ -25,6 +25,14 @@ async function removeNote(noteId) {
     console.log(chalk.red('Note was removed!'))
 }
 
+async function editNote(noteId, data) {
+    const notes = await getNotes()
+    const noteIndex = notes.findIndex(note => note.id === noteId)
+    notes[noteIndex].title = data
+
+    await fs.writeFile(notesPath, JSON.stringify(notes))
+}
+
 async function getNotes() {
     const notes = await fs.readFile(notesPath, {encoding: 'utf-8'})
 
@@ -41,5 +49,5 @@ async function printNotes() {
 }
 
 module.exports = {
-    addNote, getNotes, printNotes, removeNote
+    addNote, getNotes, printNotes, removeNote, editNote
 }
