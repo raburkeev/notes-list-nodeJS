@@ -33,7 +33,7 @@
             <ul class="list-group">
                 <% for (let i = 0; i < notes.length; i++) { %>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span data-title="<% notes[i].id %>"><%= notes[i].title %></span>
+                    <span data-title="<%= notes[i].id %>"><%= notes[i].title %></span>
                     <div>
                         <button class="btn btn-primary" data-type="edit" data-id="<%= notes[i].id %>">Edit</button>
                         <button class="btn btn-danger" data-type="remove" data-id="<%= notes[i].id %>">&times;</button>
@@ -46,7 +46,6 @@
         <% } else { %>
             <p>No notes!</p>
         <% } %>
-
     </div>
 
 <script src="/app.js"></script>

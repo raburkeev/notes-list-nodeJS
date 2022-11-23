@@ -23,10 +23,6 @@ app.get('/', async (req, res) => {
     })
 })
 
-// app.get(`/:id/:data`, async (req, res) => {
-//
-// })
-
 app.post('/', async (req, res) => {
     await addNote(req.body.title)
     res.render('index', {
