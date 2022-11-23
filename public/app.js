@@ -11,17 +11,50 @@ document.addEventListener('click', (event) => {
 document.addEventListener('click', (event) => {
     if(event.target.dataset.type === 'edit') {
         const id = event.target.dataset.id
-        const data = prompt('Print new title')
+        const noteTitle = document.querySelector(`[data-title="${id}"]`).innerText
 
-        if (data) {
-            edit(id, data).then(() => {
-                event.target.closest('li').innerHTML = `${data}
-                    <div>
-                        <button class="btn btn-primary" data-type="edit" data-id="${id}">Edit</button>
-                        <button class="btn btn-danger" data-type="remove" data-id="${id}">&times;</button>
-                    </div>`
-            })
-        }
+        event.target.closest('li').innerHTML = (
+            `<input type="text" data-input="${id}" name="newTitle" value="${noteTitle}" required/>
+                <div>
+                    <button class="btn btn-success" data-type="save" data-id="${id}">Save</button>
+                    <button class="btn btn-danger" data-type="cancel" data-id="${id}">Cancel</button>
+                </div>
+            `
+        )
+    }
+})
+
+document.addEventListener('click', (event) => {
+    const id = event.target.dataset.id
+    if(event.target.dataset.type === 'save') {
+        const editInput = document.querySelector(`[data-input="${id}"]`)
+        edit(id, editInput.value).then(() => {
+
+            event.target.closest('li').innerHTML = (
+                `<span data-title="${id}">${editInput.value}</span> 
+                <div>
+                    <button class="btn btn-primary" data-type="edit" data-id="${id}">Edit</button>
+                    <button class="btn btn-danger" data-type="remove" data-id="${id}">&times;</button>
+                </div>
+                `
+            )
+        })
+    }
+})
+
+document.addEventListener('click', (event) => {
+    if(event.target.dataset.type === 'cancel') {
+        const id = event.target.dataset.id
+        const noteTitle = document.querySelector(`[data-input="${id}"]`).value
+        event.target.closest('li').innerHTML = (
+            `
+                <span data-title="${id}">${noteTitle}</span>
+                <div>
+                    <button class="btn btn-primary" data-type="edit" data-id="${id}">Edit</button>
+                    <button class="btn btn-danger" data-type="remove" data-id="${id}">&times;</button>
+                </div>
+            `
+        )
     }
 })
 
